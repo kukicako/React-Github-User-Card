@@ -5,7 +5,7 @@ class App extends React.Component {
   constructor(){
     super();
     this.state = {
-      myData: [],
+      myData: {},
       followers: []
     }
   }
@@ -31,16 +31,16 @@ class App extends React.Component {
           followers: res.data
         })
        
-         user.forEach(follower =>{
-            axios
-            .get(`https://api.github.com/users/${follower}`)
-            .then(res => {
-              console.log(res.data)
-              this.setState({
-                followers: res.data
-              })
-            })
-          })
+        //  user.forEach(follower =>{
+        //     axios
+        //     .get(`https://api.github.com/users/${follower}`)
+        //     .then(res => {
+        //       console.log(res.data)
+        //       this.setState({
+        //         followers: res.data
+        //       })
+        //     })
+        //   })
         })
       .catch(err => {
         console.log("Sorry went wrong -->", err)
@@ -50,22 +50,18 @@ class App extends React.Component {
     return (
       <div className="App">
         <div className="follower">
-          {this.state.myData.map(me => (
             <div>
-              <img width="10%" src={me.avatar_url} key={me.id} />
-              <p>{me.Name}</p>
-              <p>{me.login}</p>
-              <p>{me.location}</p>
-              <p>{me.followers}</p>
+              <img width="10%" src={this.state.myData.avatar_url} key={this.state.myData.id} />
+              <p>{this.state.myData.name}</p>
+              <p>{this.state.myData.login}</p>
+              <p>followers: {this.state.myData.followers}</p>
             </div>
-          ))} 
+          
           {this.state.followers.map(follower => (
-            <div>
+            <div key={follower.id}>
               <img width="10%" src={follower.avatar_url} key={follower.id} />
               <p>{follower.name}</p>
               <p>{follower.login}</p>
-              <p>{follower.location}</p>
-              <p>{follower.followers}</p>
             </div>
           ))} 
         </div>
